@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
+
+
 
 const usuario = require('./routes/usuario');
 const programa = require('./routes/programa');
@@ -9,7 +12,16 @@ const estudiante = require('./routes/estudiante');
 const ofertaPractica = require('./routes/ofertaPractica');
 const practica = require('./routes/practica');
 
+
+
+
+
 const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+//app.use('api/ofertas-practicas',ofertaPractica);
+
+
 app.use(bodyParser.json());
 
 app.use('/api/usuarios', usuario);

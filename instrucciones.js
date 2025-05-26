@@ -15,3 +15,7 @@
 //node server.js
 // http://localhost:3000/api/curso
 //http://localhost:3000/api/curso/?id=101
+
+//CORS
+
+// npm install cors
