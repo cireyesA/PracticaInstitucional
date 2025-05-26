@@ -22,10 +22,11 @@ const getUsuarioById = async (req, res) => {
 };
 
 const createUsuario = async (req, res) => {
-    const { idUsuario, contrasena } = req.body;
+    //const { idUsuario, contrasena } = req.body;
+    const { idUsuario, primerNombre,segundoNombre,primerApellido,segundoApellido,correo,contrasena } = req.body;
     console.log(`Creando usuario con ID: ${idUsuario}`);
     try {
-        const nuevoUsuario = await Usuario.create(idUsuario, contrasena);
+        const nuevoUsuario = await Usuario.create(idUsuario, primerNombre,segundoNombre,primerApellido,segundoApellido,correo,contrasena);
         return res.status(201).json(nuevoUsuario);
     } catch (error) {
         res.status(500).send(error.message);
@@ -33,9 +34,9 @@ const createUsuario = async (req, res) => {
 };
 
 const updateUsuario = async (req, res) => {
-    const { idUsuario, contrasena } = req.body;
+    const { idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, correo, contrasena } = req.body;
     try {
-        const actualizarUsuario = await Usuario.update(idUsuario, contrasena);
+        const actualizarUsuario = await Usuario.update(idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, correo, contrasena);
         return res.status(200).json(actualizarUsuario);
     } catch (error) {
         res.status(500).send(error.message);
