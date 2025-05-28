@@ -2,31 +2,31 @@ const db = require('../config/mysql');
 
 const Estudiante = {
     getAll: async () => {
-        const [rows] = await db.query('SELECT idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma FROM Estudiante');
+        const [rows] = await db.query('SELECT idEstudiante, codigoEstudiante, idUsuario, idPrograma FROM Estudiante');
         return rows;
     },
     
     getById: async (idEstudiante) => {
-        const [rows] = await db.query('SELECT idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma FROM Estudiante WHERE idEstudiante = ?', 
+        const [rows] = await db.query('SELECT idEstudiante, codigoEstudiante, idPrograma FROM Estudiante WHERE idEstudiante = ?', 
             [idEstudiante]);
         return rows[0];
     },
     
-    create: async (idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma) => {
+    create: async (idEstudiante, codigoEstudiante, idUsuario, idPrograma) => {
         console.log(`Creando estudiante con ID: ${idEstudiante}`);
         const [result] = await db.query(
-            'INSERT INTO Estudiante (idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-            [idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma]
+            'INSERT INTO Estudiante (idEstudiante, codigoEstudiante, idUsuario, idPrograma) VALUES (?, ?, ?, ?)', 
+            [idEstudiante, codigoEstudiante, idUsuario, idPrograma]
         );
-        return { idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma };
+        return { idEstudiante, codigoEstudiante, idUsuario, idPrograma };
     },
     
-    update: async (idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma) => {
+    update: async (idEstudiante, codigoEstudiante, idUsuario, idPrograma) => {
         const [result] = await db.query(
-            'UPDATE Estudiante SET primerNombre = ?, segundoNombre = ?, primerApellido = ?, segundoApellido = ?, codigoEstudiante = ?, correo = ?, idUsuario = ?, idPrograma = ? WHERE idEstudiante = ?', 
-            [primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma, idEstudiante]
+            'UPDATE Estudiante SET codigoEstudiante = ?, idUsuario = ?, idPrograma = ? WHERE idEstudiante = ?', 
+            [idEstudiante, codigoEstudiante, idUsuario, idPrograma]
         );
-        return { idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma };
+        return { idEstudiante, codigoEstudiante, idUsuario, idPrograma};
     },
     
     delete: async (idEstudiante) => {

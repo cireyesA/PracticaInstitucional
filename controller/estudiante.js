@@ -22,10 +22,10 @@ const getEstudianteById = async (req, res) => {
 };
 
 const createEstudiante = async (req, res) => {
-    const { idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma } = req.body;
+    const { idEstudiante, codigoEstudiante, idUsuario, idPrograma } = req.body;
     console.log(`Creando estudiante con ID: ${idEstudiante}`);
     try {
-        const nuevoEstudiante = await Estudiante.create(idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma);
+        const nuevoEstudiante = await Estudiante.create(idEstudiante, codigoEstudiante, idUsuario, idPrograma);
         return res.status(201).json(nuevoEstudiante);
     } catch (error) {
         res.status(500).send(error.message);
@@ -33,9 +33,10 @@ const createEstudiante = async (req, res) => {
 };
 
 const updateEstudiante = async (req, res) => {
-    const { idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma } = req.body;
+
+    const { idEstudiante, codigoEstudiante, idUsuario, idPrograma } = req.body;
     try {
-        const actualizarEstudiante = await Estudiante.update(idEstudiante, primerNombre, segundoNombre, primerApellido, segundoApellido, codigoEstudiante, correo, idUsuario, idPrograma);
+        const actualizarEstudiante = await Estudiante.update(idEstudiante, codigoEstudiante, idUsuario, idPrograma);
         return res.status(200).json(actualizarEstudiante);
     } catch (error) {
         res.status(500).send(error.message);
@@ -43,6 +44,7 @@ const updateEstudiante = async (req, res) => {
 };
 
 const deleteEstudiante = async (req, res) => {
+        console.log('holisss',req.params)
     try {
         await Estudiante.delete(req.params.id);
         res.json({ message: 'Estudiante eliminado correctamente' });
