@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
--- Host: localhost    Database: practicasins
+-- Host: 127.0.0.1    Database: practicasins
 -- ------------------------------------------------------
--- Server version	8.0.42
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,12 +24,9 @@ DROP TABLE IF EXISTS `docente`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `docente` (
   `idDocente` int NOT NULL,
-  `primerNombre` varchar(45) DEFAULT NULL,
-  `segundoNombre` varchar(45) DEFAULT NULL,
-  `primerApellido` varchar(45) DEFAULT NULL,
-  `segundoApellido` varchar(45) DEFAULT NULL,
-  `correo` varchar(60) DEFAULT NULL,
   `idUsuario` int DEFAULT NULL,
+  `tipoContratacion` varchar(50) DEFAULT NULL,
+  `salario` float DEFAULT NULL,
   PRIMARY KEY (`idDocente`),
   KEY `idUsuario` (`idUsuario`),
   CONSTRAINT `docente_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`)
@@ -42,6 +39,7 @@ CREATE TABLE `docente` (
 
 LOCK TABLES `docente` WRITE;
 /*!40000 ALTER TABLE `docente` DISABLE KEYS */;
+INSERT INTO `docente` VALUES (1,1,'Tiempo Completo',3500000),(2,2,'Tiempo Completo',3500000);
 /*!40000 ALTER TABLE `docente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,12 +52,7 @@ DROP TABLE IF EXISTS `estudiante`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `estudiante` (
   `idEstudiante` int NOT NULL,
-  `primerNombre` varchar(45) DEFAULT NULL,
-  `segundoNombre` varchar(45) DEFAULT NULL,
-  `primerApellido` varchar(45) DEFAULT NULL,
-  `segundoApellido` varchar(45) DEFAULT NULL,
-  `codigoEstudiante` int DEFAULT NULL,
-  `correo` varchar(60) DEFAULT NULL,
+  `codigoEstudiante` int NOT NULL,
   `idUsuario` int DEFAULT NULL,
   `idPrograma` int DEFAULT NULL,
   PRIMARY KEY (`idEstudiante`),
@@ -76,6 +69,7 @@ CREATE TABLE `estudiante` (
 
 LOCK TABLES `estudiante` WRITE;
 /*!40000 ALTER TABLE `estudiante` DISABLE KEYS */;
+INSERT INTO `estudiante` VALUES (1,20210101,2,1),(2,7022101,2,1);
 /*!40000 ALTER TABLE `estudiante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +82,7 @@ DROP TABLE IF EXISTS `ofertapractica`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ofertapractica` (
   `idOfertaPractica` int NOT NULL,
-  `titulo` varchar(45) DEFAULT NULL,
+  `titulo` varchar(45) NOT NULL,
   `descripcion` varchar(200) DEFAULT NULL,
   `fechaPublicacion` datetime DEFAULT NULL,
   PRIMARY KEY (`idOfertaPractica`)
@@ -101,6 +95,7 @@ CREATE TABLE `ofertapractica` (
 
 LOCK TABLES `ofertapractica` WRITE;
 /*!40000 ALTER TABLE `ofertapractica` DISABLE KEYS */;
+INSERT INTO `ofertapractica` VALUES (1,'Desarrollo de Software Empresarial','Proyecto de desarrollo en Java y Spring Boot para sistema de gestión de inventarios.','2025-04-15 10:00:00'),(2,'Desarrollo software carnets','Proyecto de desarrollo en Java y Spring Boot para sistema de gestión de inventarios.','2025-04-15 10:00:00');
 /*!40000 ALTER TABLE `ofertapractica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +112,7 @@ CREATE TABLE `practica` (
   `idDocente` int DEFAULT NULL,
   `fechaInicio` datetime DEFAULT NULL,
   `fechaFin` datetime DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) NOT NULL,
   `idOfertaPractica` int DEFAULT NULL,
   PRIMARY KEY (`idPractica`),
   KEY `idEstudiante` (`idEstudiante`),
@@ -135,6 +130,7 @@ CREATE TABLE `practica` (
 
 LOCK TABLES `practica` WRITE;
 /*!40000 ALTER TABLE `practica` DISABLE KEYS */;
+INSERT INTO `practica` VALUES (1,1,1,'2025-05-20 08:00:00','2025-11-20 18:00:00','Asignada',1);
 /*!40000 ALTER TABLE `practica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,8 +143,8 @@ DROP TABLE IF EXISTS `programa`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `programa` (
   `idPrograma` int NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL,
-  `codigo` int DEFAULT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `codigo` int NOT NULL,
   PRIMARY KEY (`idPrograma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -159,6 +155,7 @@ CREATE TABLE `programa` (
 
 LOCK TABLES `programa` WRITE;
 /*!40000 ALTER TABLE `programa` DISABLE KEYS */;
+INSERT INTO `programa` VALUES (1,'Ingeniería de Sistemas',1001);
 /*!40000 ALTER TABLE `programa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,6 +168,11 @@ DROP TABLE IF EXISTS `usuario`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
   `idUsuario` int NOT NULL,
+  `primerNombre` varchar(45) NOT NULL,
+  `segundoNombre` varchar(45) DEFAULT NULL,
+  `primerApellido` varchar(45) NOT NULL,
+  `segundoApellido` varchar(45) DEFAULT NULL,
+  `correo` varchar(60) NOT NULL,
   `contrasena` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -182,6 +184,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'Juan','Carlos','Rodríguez','Gómez','juan.rodriguez@email.com','clave123'),(2,'María','Fernanda','López','Jiménez','maria.lopez@email.com','password456');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,4 +201,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-14  8:47:23
+-- Dump completed on 2025-05-26  6:18:21
