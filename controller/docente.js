@@ -22,10 +22,10 @@ const getDocenteById = async (req, res) => {
 };
 
 const createDocente = async (req, res) => {
-    const { idDocente, primerNombre, segundoNombre, primerApellido, segundoApellido, correo, idUsuario } = req.body;
+    const { idDocente, tipoContratacion,salario, idUsuario } = req.body;
     console.log(`Creando docente con ID: ${idDocente}`);
     try {
-        const nuevoDocente = await Docente.create(idDocente, primerNombre, segundoNombre, primerApellido, segundoApellido, correo, idUsuario);
+        const nuevoDocente = await Docente.create(idDocente, tipoContratacion,salario, idUsuario);
         return res.status(201).json(nuevoDocente);
     } catch (error) {
         res.status(500).send(error.message);
@@ -33,9 +33,9 @@ const createDocente = async (req, res) => {
 };
 
 const updateDocente = async (req, res) => {
-    const { idDocente, primerNombre, segundoNombre, primerApellido, segundoApellido, correo, idUsuario } = req.body;
+    const { idDocente, tipoContratacion,salario, idUsuario } = req.body;
     try {
-        const actualizarDocente = await Docente.update(idDocente, primerNombre, segundoNombre, primerApellido, segundoApellido, correo, idUsuario);
+        const actualizarDocente = await Docente.update(idDocente, tipoContratacion,salario, idUsuario);
         return res.status(200).json(actualizarDocente);
     } catch (error) {
         res.status(500).send(error.message);

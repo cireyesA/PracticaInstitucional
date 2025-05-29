@@ -12,7 +12,7 @@ CREATE TABLE Programa (
     nombre VARCHAR(45),
     codigo INT
 );
-
+ 
 -- Tabla Docente
 CREATE TABLE Docente (
     idDocente INT PRIMARY KEY,
